@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useBooksSelector, useBooksDispatch, addBook } from "./store/books";
+import { useThemeSelector, useThemeDispatch, setTheme } from "./store/theme";
 
-function App() {
+const App = (): JSX.Element => {
+  const books = useBooksSelector((state) => state.books);
+  const theme = useThemeSelector((state) => state.theme);
+  const bookDispatch = useBooksDispatch();
+  const themeDispatch = useThemeDispatch();
+
+  console.log(books);
+
+  console.log(theme);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div>
+        <button
+          onClick={() => {
+            bookDispatch(addBook("NewBook"));
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          addBook
+        </button>
+
+        <button
+          onClick={() => {
+            themeDispatch(setTheme("NewTheme"));
+          }}
+        >
+          set Theme
+        </button>
+      </div>
+    </>
   );
-}
+};
 
 export default App;
